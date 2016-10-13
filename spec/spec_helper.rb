@@ -21,6 +21,9 @@ spec_folder = File.dirname(__FILE__)
 $LOAD_PATH.unshift(File.join(spec_folder, '..', 'lib'))
 $LOAD_PATH.unshift(spec_folder)
 
+require 'bundler'
+Bundler.require(:default, :test)
+
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
