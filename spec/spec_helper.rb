@@ -17,10 +17,6 @@
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 
-spec_folder = File.dirname(__FILE__)
-$LOAD_PATH.unshift(File.join(spec_folder, '..', 'lib'))
-$LOAD_PATH.unshift(spec_folder)
-
 require 'bundler'
 Bundler.require(:default, :test)
 
