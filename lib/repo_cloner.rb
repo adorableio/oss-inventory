@@ -3,7 +3,7 @@ class RepoCloner
 
   def initialize(repo)
     @repo = repo
-    @destination = File.join(repo.directory, repo.name)
+    @destination = repo.file_location
 
     clone
     fetch

@@ -27,6 +27,10 @@ RSpec.describe Repo do
     it 'sets its name from the url' do
       expect(subject.name).to eq('oss-inventory')
     end
+
+    it 'sets its file_location from the directory and name' do
+      expect(subject.file_location).to eq('/tmp/oss-inventory')
+    end
   end
 
   describe '#clone' do

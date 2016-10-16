@@ -1,13 +1,14 @@
 require 'repo_cloner'
 
 class Repo
-  attr_accessor :directory, :url, :branch, :name
+  attr_accessor :directory, :url, :branch, :name, :file_location
 
   def initialize(directory, options)
     @directory = directory
     @url = options[:url]
     @branch = options[:branch]
     @name = parse_name_from_git_url(@url)
+    @file_location = File.join(@directory, @name)
   end
 
   def clone
