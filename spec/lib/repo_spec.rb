@@ -2,16 +2,16 @@ require 'repo'
 
 RSpec.describe Repo do
   subject { described_class.new(directory, repo_options) }
+
   let(:directory) { '/tmp/' }
+  let(:repo_options) do
+    {
+      url: 'git@github.com:adorableio/oss-inventory.git',
+      branch: 'master'
+    }
+  end
 
   describe '#new' do
-    let(:repo_options) do
-      {
-        url: 'git@github.com:adorableio/oss-inventory.git',
-        branch: 'master'
-      }
-    end
-
     it 'sets its directory from arguments' do
       expect(subject.directory).to eq(directory)
     end
@@ -26,6 +26,14 @@ RSpec.describe Repo do
 
     it 'sets its name from the url' do
       expect(subject.name).to eq('oss-inventory')
+    end
+  end
+
+  describe '#clone' do
+    it 'delegates to an instance of a RepoCloner' do
+      expect(RepoCloner).to receive(:new).with(subject)
+
+      subject.clone
     end
   end
 end

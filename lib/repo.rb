@@ -1,3 +1,5 @@
+require 'repo_cloner'
+
 class Repo
   attr_accessor :directory, :url, :branch, :name
 
@@ -6,6 +8,10 @@ class Repo
     @url = options[:url]
     @branch = options[:branch]
     @name = parse_name_from_git_url(@url)
+  end
+
+  def clone
+    RepoCloner.new(self)
   end
 
   private
