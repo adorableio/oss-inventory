@@ -1,4 +1,5 @@
 require 'repo_cloner'
+require 'inventory'
 
 class Repo
   attr_accessor :directory, :url, :branch, :name, :file_location
@@ -13,6 +14,11 @@ class Repo
 
   def clone
     RepoCloner.new(self)
+  end
+
+  def build_inventory
+    clone
+    Inventory.new(self)
   end
 
   private

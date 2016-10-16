@@ -34,10 +34,28 @@ RSpec.describe Repo do
   end
 
   describe '#clone' do
-    it 'delegates to an instance of a RepoCloner' do
+    it 'builds an instance of a RepoCloner' do
       expect(RepoCloner).to receive(:new).with(subject)
 
       subject.clone
+    end
+  end
+
+  describe '#build_inventory' do
+    before do
+      allow(subject).to receive(:clone)
+    end
+
+    it 'ensures that the repo is cloned' do
+      expect(subject).to receive(:clone)
+
+      subject.build_inventory
+    end
+
+    it 'builds an instance of an Inventory' do
+      expect(Inventory).to receive(:new).with(subject)
+
+      subject.build_inventory
     end
   end
 end
