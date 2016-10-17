@@ -11,6 +11,18 @@ RSpec.describe BundlerStrategy do
     ]
   end
 
+  describe '#get_license' do
+    context 'with no license' do
+      before do
+        allow(subject).to receive(:`).with('gem list bad_gem --details').and_return("")
+      end
+
+      it "returns NOT_FOUND" do
+        expect(subject.send(:get_license, 'bad_gem')).to eq('NOT_FOUND')
+      end
+    end
+  end
+
   describe '#get_libraries' do
     context 'with no gems' do
       let(:no_gems_message) { "Could not locate Gemfile or .bundle/ directory\n" }

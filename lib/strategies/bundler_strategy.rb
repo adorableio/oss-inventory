@@ -23,7 +23,7 @@ class BundlerStrategy
         .map do |line|
           _, gem_name, version = line.split
           version = version.gsub(/[()]/, '')
-          license = get_license(gem_name, version)
+          license = get_license(gem_name)
 
           {
             "name" => gem_name,
@@ -34,11 +34,15 @@ class BundlerStrategy
     end
   end
 
-  def get_license(gem_name, version)
-    `gem list #{gem_name} --details`
+  def get_license(gem_name)
+    license_lines = `gem list #{gem_name} --details`
       .split("\n")
       .map(&:strip)
       .grep(/license/i)
+
+    return 'NOT_FOUND' if license_lines.empty?
+
+    license_lines
       .first
       .gsub(/licenses?:/i, '')
       .strip
