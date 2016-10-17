@@ -1,3 +1,5 @@
+require 'strategy_factory'
+
 class Inventory
   def initialize(repo)
     @strategies = StrategyFactory.get_strategies(repo)

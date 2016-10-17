@@ -1,3 +1,5 @@
+require 'inventory_printer'
+
 class BundlerStrategy
   attr_reader :repo, :strategy_name
 
