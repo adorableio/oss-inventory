@@ -12,7 +12,7 @@ cp config.yml{.example,}
 
 ## Configuration
 After setting up the project, you should now have a file called config.yml.
-This is where you list the repositories that you care to inventory.
+This is where you list the repositories that you care to inventory, along with where you wish the inventory files to be located.
 Delete the existing examples and replace them with your own.
 
 ## Generating your inventory
@@ -23,7 +23,7 @@ bundle exec rake build_inventory
 ```
 
 Depending on the number/size of your repositories, this may take a while.
-When the task has finished, you'll be left with a bunch of .txt files in /tmp/oss-inventory/ folder.
+When the task has finished, you'll be left with a bunch of .txt files in the folder you specified (in config.yml).
 Each one contains a list of the names, versions, and licenses used by the libraries on which your project depends.
 That's it! Use these text files however you need.
 
