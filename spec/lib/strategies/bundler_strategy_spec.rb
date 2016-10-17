@@ -6,8 +6,8 @@ RSpec.describe BundlerStrategy do
   let(:repo) { double('repo', file_location: '/tmp/oss-inventory') }
   let(:libraries) do
     [
-      {name: 'bundler', version: '1.13.1', license: 'MIT'},
-      {name: 'slop', version: '3.6.0', license: 'BSD'}
+      {"name" => 'bundler', "version" => '1.13.1', "license" => 'MIT'},
+      {"name" => 'slop', "version" => '3.6.0', "license" => 'BSD'}
     ]
   end
 

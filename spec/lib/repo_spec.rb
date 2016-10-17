@@ -6,8 +6,8 @@ RSpec.describe Repo do
   let(:directory) { '/tmp/oss-inventory' }
   let(:repo_options) do
     {
-      url: 'git@github.com:adorableio/oss-inventory.git',
-      branch: 'master'
+      "url" => 'git@github.com:adorableio/oss-inventory.git',
+      "branch" => 'master'
     }
   end
 
@@ -17,11 +17,11 @@ RSpec.describe Repo do
     end
 
     it 'sets its url from the specified options' do
-      expect(subject.url).to eq(repo_options[:url])
+      expect(subject.url).to eq(repo_options['url'])
     end
 
     it 'sets its branch from the specified options' do
-      expect(subject.branch).to eq(repo_options[:branch])
+      expect(subject.branch).to eq(repo_options['branch'])
     end
 
     it 'sets its name from the url' do

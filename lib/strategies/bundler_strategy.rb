@@ -24,9 +24,9 @@ class BundlerStrategy
           license = get_license(gem_name, version)
 
           {
-            name: gem_name,
-            version: version,
-            license: license
+            "name" => gem_name,
+            "version" => version,
+            "license" => license
           }
         end
     end

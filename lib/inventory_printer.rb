@@ -15,7 +15,7 @@ class InventoryPrinter
     Dir.chdir(repo.directory) do
       File.open(file_name, 'w') do |writer|
         libraries.each do |library|
-          writer.write("#{library[:name]} #{library[:version]} #{library[:license]}\n")
+          writer.write("#{library['name']} #{library['version']} #{library['license']}\n")
         end
       end
     end

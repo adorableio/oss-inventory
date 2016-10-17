@@ -6,8 +6,8 @@ class Repo
 
   def initialize(directory, options)
     @directory = directory
-    @url = options[:url]
-    @branch = options[:branch]
+    @url = options['url']
+    @branch = options['branch']
     @name = parse_name_from_git_url(@url)
     @file_location = File.join(@directory, @name)
   end

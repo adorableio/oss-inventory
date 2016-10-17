@@ -10,8 +10,8 @@ RSpec.describe InventoryPrinter do
     let(:repo_directory) { '/tmp/oss-inventory' }
     let(:libraries) do
       [
-        {name: 'bundler', version: '1.13.1', license: 'MIT'},
-        {name: 'slop', version: '3.6.0', license: 'BSD'}
+        {"name" => 'bundler', "version" => '1.13.1', "license" => 'MIT'},
+        {"name" => 'slop', "version" => '3.6.0', "license" => 'BSD'}
       ]
     end
     let(:strategy_name) { :bundler }
