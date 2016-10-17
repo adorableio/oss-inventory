@@ -4,7 +4,7 @@ class InventoryPrinter
   def initialize(repo, libraries, strategy_name)
     @repo = repo
     @libraries = libraries
-    @file_name = "#{repo.name}_#{strategy_name}.txt"
+    @file_name = "#{repo.name}_#{strategy_name}.tsv"
 
     generate_inventory_file
   end
@@ -15,7 +15,7 @@ class InventoryPrinter
     Dir.chdir(repo.directory) do
       File.open(file_name, 'w') do |writer|
         libraries.each do |library|
-          writer.write("#{library['name']} #{library['version']} #{library['license']}\n")
+          writer.write("#{library['name']}\t#{library['version']}\t#{library['license']}\n")
         end
       end
     end

@@ -16,7 +16,7 @@ RSpec.describe InventoryPrinter do
     end
     let(:strategy_name) { :bundler }
     let(:expected_inventory_file) do
-      File.join(repo_directory, "repo_bundler.txt")
+      File.join(repo_directory, "repo_bundler.tsv")
     end
 
     it "generates a file in the given repo's parent directory" do

@@ -23,7 +23,7 @@ bundle exec rake build_inventory
 ```
 
 Depending on the number/size of your repositories, this may take a while.
-When the task has finished, you'll be left with a bunch of .txt files in the folder you specified (in config.yml).
+When the task has finished, you'll be left with a bunch of .tsv files in the folder you specified (in config.yml).
 Each one contains a list of the names, versions, and licenses used by the libraries on which your project depends.
 That's it! Use these text files however you need.
 
