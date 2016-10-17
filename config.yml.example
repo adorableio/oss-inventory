@@ -1,0 +1,6 @@
+---
+
+- url: git@github.com:adorableio/oss-inventory.git
+  branch: master
+- url: git@github.com:adorableio/woo.git
+  branch: master
