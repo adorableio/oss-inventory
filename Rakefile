@@ -12,6 +12,8 @@ task :build_inventory do
   inventory_directory = config['inventory_directory']
   repositories_attributes = config['repositories']
 
+  Dir.mkdir(inventory_directory) unless File.exists?(inventory_directory)
+
   repositories_attributes.each do |repository_attributes|
     repo = Repo.new(inventory_directory, repository_attributes)
     repo.build_inventory
