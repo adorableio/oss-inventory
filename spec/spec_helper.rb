@@ -104,4 +104,10 @@ RSpec.configure do |config|
   # as the one that triggered the failure.
   Kernel.srand config.seed
 =end
+
+  config.before(:each) do
+    tmp_dir = '/tmp/oss-inventory'
+    FileUtils.rm_rf(tmp_dir)
+    Dir.mkdir(tmp_dir)
+  end
 end

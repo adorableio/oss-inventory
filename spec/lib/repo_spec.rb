@@ -3,7 +3,7 @@ require 'repo'
 RSpec.describe Repo do
   subject { described_class.new(directory, repo_options) }
 
-  let(:directory) { '/tmp/' }
+  let(:directory) { '/tmp/oss-inventory' }
   let(:repo_options) do
     {
       url: 'git@github.com:adorableio/oss-inventory.git',
@@ -29,7 +29,7 @@ RSpec.describe Repo do
     end
 
     it 'sets its file_location from the directory and name' do
-      expect(subject.file_location).to eq('/tmp/oss-inventory')
+      expect(subject.file_location).to eq('/tmp/oss-inventory/oss-inventory')
     end
   end
 
@@ -44,6 +44,7 @@ RSpec.describe Repo do
   describe '#build_inventory' do
     before do
       allow(subject).to receive(:clone)
+      allow(Inventory).to receive(:new)
     end
 
     it 'ensures that the repo is cloned' do

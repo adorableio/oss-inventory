@@ -3,7 +3,7 @@ require 'strategy_factory'
 RSpec.describe StrategyFactory do
   describe '.get_strategies' do
     let(:found_strategies) { described_class.get_strategies(repo) }
-    let(:repo) { double('repo', file_location: '/tmp') }
+    let(:repo) { double('repo', file_location: '/tmp/oss-inventory') }
 
     context 'when no representative files are found in the repo' do
       before do
