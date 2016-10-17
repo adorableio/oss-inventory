@@ -1,4 +1,5 @@
-# OSS Inventory
+# OSS Inventory [![CircleCI](https://circleci.com/gh/adorableio/oss-inventory.svg?style=svg&circle-token=3b3596811135edc5bb344beb6df3ad9b6e68be71)](https://circleci.com/gh/adorableio/oss-inventory)
+
 Compiles a list of Open Source libraries used by your project(s).
 
 ## Setup
