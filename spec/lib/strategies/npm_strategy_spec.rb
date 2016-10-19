@@ -4,30 +4,37 @@ RSpec.describe NpmStrategy do
   subject { described_class.new(repo) }
 
   let(:repo) { double('repo', file_location: '/tmp/oss-inventory') }
-  let(:packages) do
-    [
-      {"name" => 'run-command', "version" => '0.0.1', "license" => 'MIT'},
-      {"name" => 'custom-logger', "version" => '1.8.3', "license" => 'BSD'}
-    ]
-  end
-  let(:npm_list_message) do
-    '
-    /tmp/oss-inventory/node_modules/run-command
-    /tmp/oss-inventory/node_modules/run-command/node_modules/custom-logger
-    '
+
+  describe "#name" do
+    it "is defined" do
+      expect(subject.name).to eq(:npm)
+    end
   end
 
-  before do
-    allow(subject).to receive(:`).with(/npm install/)
-    allow(subject).to receive(:`).with('npm list --parseable').and_return(npm_list_message)
-  end
+  describe '#get_libraries' do
+    let(:packages) do
+      [
+        {"name" => 'run-command', "version" => '0.0.1', "license" => 'MIT'},
+        {"name" => 'custom-logger', "version" => '1.8.3', "license" => 'BSD'}
+      ]
+    end
+    let(:npm_list_message) do
+      '
+      /tmp/oss-inventory/node_modules/run-command
+      /tmp/oss-inventory/node_modules/run-command/node_modules/custom-logger
+      '
+    end
 
-  describe '#perform' do
+    before do
+      allow(subject).to receive(:`).with(/npm install/)
+      allow(subject).to receive(:`).with('npm list --parseable').and_return(npm_list_message)
+    end
+
     context 'with bad package.json' do
       let(:npm_list_message) { "" }
 
       it 'returns an empty array' do
-        expect(subject.send(:get_packages)).to be_empty
+        expect(subject.get_libraries).to be_empty
       end
     end
 
@@ -96,16 +103,64 @@ RSpec.describe NpmStrategy do
       end
 
       it "returns an object for each package" do
-        expect(subject.send(:get_packages)).to eq(packages)
+        expect(subject.get_libraries).to eq(packages)
       end
     end
   end
 
-  describe "#perform" do
-    it 'passes the retrieved library objects to InventoryPrinter' do
-      allow(subject).to receive(:get_packages).and_return(packages)
-      expect(InventoryPrinter).to receive(:new).with(repo, packages, :npm)
-      subject.perform
+  describe "#get_license" do
+    let(:strategy) { described_class.new(repo) }
+    subject { strategy.send(:get_license, package_info) }
+
+    context "when value is an array of strings" do
+      let(:package_info) do
+        {
+          "licenses" => ["string", "string2"]
+        }
+      end
+
+      it "joins multiple licenses" do
+        expect(subject).to eq("string, string2")
+      end
+    end
+
+    context "when value is an array of objects" do
+      let(:package_info) do
+        {
+          "licenses" => [
+            {"type" => "type", "other" => "other"},
+            {"type" => "type2", "other" => "other2"}
+          ]
+        }
+      end
+
+      it "joins their types" do
+        expect(subject).to eq("type, type2")
+      end
+    end
+
+    context "when value is a hash" do
+      let(:package_info) do
+        {
+          "licenses" => {"type" => "type", "other" => "other"}
+        }
+      end
+
+      it "uses its type" do
+        expect(subject).to eq("type")
+      end
+    end
+
+    context "when value is a string" do
+      let(:package_info) do
+        {
+          "licenses" => "string"
+        }
+      end
+
+      it "uses it" do
+        expect(subject).to eq("string")
+      end
     end
   end
 end

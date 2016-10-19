@@ -1,22 +1,12 @@
-require 'inventory_printer'
+require 'strategies/printed_strategy'
 require 'json'
 
-class NpmStrategy
-  attr_reader :repo, :strategy_name
-
-  def initialize(repo)
-    @strategy_name = :npm
-    @repo = repo
+class NpmStrategy < PrintedStrategy
+  def name
+    :npm
   end
 
-  def perform
-    packages = get_packages
-    InventoryPrinter.new(repo, packages, :npm)
-  end
-
-  private
-
-  def get_packages
+  def get_libraries
     Dir.chdir(repo.file_location) do
       `npm install > /dev/null 2>&1`
 
@@ -32,6 +22,8 @@ class NpmStrategy
       end
     end
   end
+
+  protected
 
   def get_license(package_info)
     value = package_info['license'] || package_info['licenses']

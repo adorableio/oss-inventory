@@ -1,19 +1,9 @@
-require 'inventory_printer'
+require "strategies/printed_strategy"
 
-class BundlerStrategy
-  attr_reader :repo, :strategy_name
-
-  def initialize(repo)
-    @strategy_name = :bundler
-    @repo = repo
+class BundlerStrategy < PrintedStrategy
+  def name
+    :bundler
   end
-
-  def perform
-    libraries = get_libraries
-    InventoryPrinter.new(repo, libraries, strategy_name)
-  end
-
-  private
 
   def get_libraries
     Dir.chdir(repo.file_location) do
@@ -33,6 +23,8 @@ class BundlerStrategy
         end
     end
   end
+
+  protected
 
   def get_license(gem_name)
     license_lines = `gem list #{gem_name} --details`

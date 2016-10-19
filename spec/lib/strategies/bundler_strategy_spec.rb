@@ -4,26 +4,21 @@ RSpec.describe BundlerStrategy do
   subject { described_class.new(repo) }
 
   let(:repo) { double('repo', file_location: '/tmp/oss-inventory') }
-  let(:libraries) do
-    [
-      {"name" => 'bundler', "version" => '1.13.1', "license" => 'MIT'},
-      {"name" => 'slop', "version" => '3.6.0', "license" => 'BSD'}
-    ]
-  end
 
-  describe '#get_license' do
-    context 'with no license' do
-      before do
-        allow(subject).to receive(:`).with('gem list bad_gem --details').and_return("")
-      end
-
-      it "returns NOT_FOUND" do
-        expect(subject.send(:get_license, 'bad_gem')).to eq('NOT_FOUND')
-      end
+  describe "#name" do
+    it "is defined" do
+      expect(subject.name).to eq(:bundler)
     end
   end
 
   describe '#get_libraries' do
+    let(:libraries) do
+      [
+        {"name" => 'bundler', "version" => '1.13.1', "license" => 'MIT'},
+        {"name" => 'slop', "version" => '3.6.0', "license" => 'BSD'}
+      ]
+    end
+
     context 'with no gems' do
       let(:no_gems_message) { "Could not locate Gemfile or .bundle/ directory\n" }
 
@@ -32,7 +27,7 @@ RSpec.describe BundlerStrategy do
       end
 
       it 'returns an empty array' do
-        expect(subject.send(:get_libraries)).to be_empty
+        expect(subject.get_libraries).to be_empty
       end
     end
 
@@ -82,16 +77,20 @@ SLOP
       end
 
       it "returns an object for each gem" do
-        expect(subject.send(:get_libraries)).to eq(libraries)
+        expect(subject.get_libraries).to eq(libraries)
       end
     end
   end
 
-  describe "#perform" do
-    it 'passes the retrieved library objects to InventoryPrinter' do
-      allow(subject).to receive(:get_libraries).and_return(libraries)
-      expect(InventoryPrinter).to receive(:new).with(repo, libraries, :bundler)
-      subject.perform
+  describe '#get_license' do
+    context 'with no license' do
+      before do
+        allow(subject).to receive(:`).with('gem list bad_gem --details').and_return("")
+      end
+
+      it "returns NOT_FOUND" do
+        expect(subject.send(:get_license, 'bad_gem')).to eq('NOT_FOUND')
+      end
     end
   end
 end
