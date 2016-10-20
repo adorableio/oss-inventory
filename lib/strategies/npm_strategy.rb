@@ -19,7 +19,7 @@ class NpmStrategy < PrintedStrategy
           "version" => package_info['version'],
           "license" => get_license(package_info)
         }
-      end
+      end.uniq
     end
   end
 

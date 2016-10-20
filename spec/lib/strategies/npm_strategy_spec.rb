@@ -109,6 +109,25 @@ RSpec.describe NpmStrategy do
       it "returns an object for each package" do
         expect(subject.get_libraries).to eq(packages)
       end
+
+      context "with duplicated packages" do
+        let(:npm_list_message) do
+          '
+          /tmp/oss-inventory/node_modules/run-command
+          /tmp/oss-inventory/node_modules/run-command/node_modules/custom-logger/node_modules/run-command
+          '
+        end
+
+        before do
+          allow(File).to receive(:read)
+            .with(/run-command\/package.json/)
+            .and_return(custom_logger_info_message)
+        end
+
+        it "does not duplicate output" do
+          expect(subject.get_libraries.count).to eq(1)
+        end
+      end
     end
   end
 
