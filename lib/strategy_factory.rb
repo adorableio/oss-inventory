@@ -1,8 +1,10 @@
 require 'strategies/bundler_strategy'
+require 'strategies/npm_strategy'
 
 class StrategyFactory
   FILES_FOR_STRATEGIES = {
-    'Gemfile' => BundlerStrategy
+    'Gemfile' => BundlerStrategy,
+    'package.json' => NpmStrategy
   }
 
   def self.get_strategies(repo)
