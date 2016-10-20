@@ -98,8 +98,12 @@ RSpec.describe NpmStrategy do
       end
 
       before do
-        allow(subject).to receive(:`).with('npm info run-command --json').and_return(run_command_info_message)
-        allow(subject).to receive(:`).with('npm info custom-logger --json').and_return(custom_logger_info_message)
+        allow(File).to receive(:read)
+          .with('/tmp/oss-inventory/node_modules/run-command/package.json')
+          .and_return(run_command_info_message)
+        allow(File).to receive(:read)
+          .with('/tmp/oss-inventory/node_modules/run-command/node_modules/custom-logger/package.json')
+          .and_return(custom_logger_info_message)
       end
 
       it "returns an object for each package" do

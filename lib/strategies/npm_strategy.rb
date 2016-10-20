@@ -11,8 +11,8 @@ class NpmStrategy < PrintedStrategy
       `npm install > /dev/null 2>&1`
 
       `npm list --parseable`.strip.split("\n").map do |package_path|
-        package_name = package_path.split("/").last
-        package_info = JSON.parse(`npm info #{package_name} --json`)
+        package_contents = File.read(package_path.strip + '/package.json')
+        package_info = JSON.parse(package_contents)
 
         {
           "name" => package_info['name'],
