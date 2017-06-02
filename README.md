@@ -4,6 +4,10 @@ Compiles a list of Open Source libraries used by your project(s).
 
 ## Setup
 ```bash
+# clone this repo
+git clone git@github.com:adorableio/oss-inventory.git
+cd oss-inventory
+
 # install dependencies
 bundle install
 
