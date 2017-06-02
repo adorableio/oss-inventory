@@ -19,6 +19,10 @@ RSpec.describe BundlerStrategy do
       ]
     end
 
+    before do
+      allow(subject).to receive(:`).with('bundle install')
+    end
+
     context 'with no gems' do
       let(:no_gems_message) { "Could not locate Gemfile or .bundle/ directory\n" }
 

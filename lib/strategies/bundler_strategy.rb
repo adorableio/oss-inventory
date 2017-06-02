@@ -7,20 +7,24 @@ class BundlerStrategy < PrintedStrategy
 
   def get_libraries
     Dir.chdir(repo.file_location) do
-      `bundle show`
-        .split("\n")
-        .select { |line| line.strip.start_with?('*') }
-        .map do |line|
-          _, gem_name, version = line.split
-          version = version.gsub(/[()]/, '')
-          license = get_license(gem_name)
+      Bundler.with_clean_env do
+        `bundle install`
 
-          {
-            "name" => gem_name,
-            "version" => version,
-            "license" => license
-          }
-        end
+        `bundle show`
+          .split("\n")
+          .select { |line| line.strip.start_with?('*') }
+          .map do |line|
+            _, gem_name, version = line.split
+            version = version.gsub(/[()]/, '')
+            license = get_license(gem_name)
+
+            {
+              "name" => gem_name,
+              "version" => version,
+              "license" => license
+            }
+          end
+      end
     end
   end
 
