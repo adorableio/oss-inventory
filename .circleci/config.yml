@@ -1,0 +1,13 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/ruby:2.3
+    steps:
+      - checkout
+      - run:
+          name: Run RSpec tests
+          command: |
+            gem install bundler
+            bundle
+            rspec
